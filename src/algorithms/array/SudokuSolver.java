@@ -55,35 +55,35 @@ public class SudokuSolver {
     }
 
     //Record which number exists on each row
-    private boolean[][] rowsExit = new boolean[9][9];
+    private boolean[][] rowsExist = new boolean[9][9];
 
     //Record which number exists on each column
-    private boolean[][] colsExit = new boolean[9][9];
+    private boolean[][] colsExist = new boolean[9][9];
 
     //Record which number exists on each grid
-    private boolean[][] gridExit = new boolean[9][9];
+    private boolean[][] gridExist = new boolean[9][9];
 
     public boolean isValid(int num, int row, int col) {
         int grid = 3*(row/3)+(col/3);
-        if(rowsExit[row][num-1] || colsExit[col][num-1] || gridExit[grid][num-1]) {
+        if(rowsExist[row][num-1] || colsExist[col][num-1] || gridExist[grid][num-1]) {
             return false;
         }
         return true;
     }
 
     public void putNumber(char[][] board, int num, int row, int col) {
-        rowsExit[row][num-1] = true;
-        colsExit[col][num-1] = true;
+        rowsExist[row][num-1] = true;
+        colsExist[col][num-1] = true;
         int grid = 3*(row/3)+(col/3);
-        gridExit[grid][num-1] = true;
+        gridExist[grid][num-1] = true;
         board[row][col] = (char)(num + '0');
     }
 
     public void removeNumber(char[][] board, int num, int row, int col) {
-        rowsExit[row][num-1] = false;
-        colsExit[col][num-1] = false;
+        rowsExist[row][num-1] = false;
+        colsExist[col][num-1] = false;
         int grid = 3*(row/3)+(col/3);
-        gridExit[grid][num-1] = false;
+        gridExist[grid][num-1] = false;
         board[row][col] = '.';
     }
 
@@ -93,10 +93,10 @@ public class SudokuSolver {
             for(int col = 0; col < 9; col++) {
                 if(board[row][col] != '.') {
                     int num = board[row][col] - '0';
-                    rowsExit[row][num-1] = true;
-                    colsExit[col][num-1] = true;
+                    rowsExist[row][num-1] = true;
+                    colsExist[col][num-1] = true;
                     int grid = 3*(row/3)+(col/3);
-                    gridExit[grid][num-1] = true;
+                    gridExist[grid][num-1] = true;
                 }
             }
         }
