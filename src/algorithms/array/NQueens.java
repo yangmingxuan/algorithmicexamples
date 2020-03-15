@@ -33,7 +33,6 @@ import java.util.List;
 public class NQueens {
 
     private List<List<String>> lret;
-    private boolean[] rowsExist;
     private boolean[] colsExist;
     private boolean[] sumExist;
     private boolean[] diffExist;
@@ -47,15 +46,11 @@ public class NQueens {
     public List<List<String>> solveNQueens(int m) {
         this.n = m;
         lret = new ArrayList<List<String>>();
-        for(int i = 0; i < n; i++) {
-            this.rowsExist = new boolean[n];
-            this.colsExist = new boolean[n];
-            this.sumExist = new boolean[n*2-1];
-            this.diffExist = new boolean[n*2-1];
-            char[][] chessSet = initChessSet();
-            putQueen(chessSet, 0, i);
-            trackBack(chessSet,n);
-        }
+        this.colsExist = new boolean[n];
+        this.sumExist = new boolean[n*2-1];
+        this.diffExist = new boolean[n*2-1];
+        char[][] chessSet = initChessSet();
+        trackBack(chessSet,0);
         
         return lret;
     }
@@ -75,7 +70,7 @@ public class NQueens {
         //The sum or difference of the coordinates is equal to the same diagonal.
         int sum = row + col;
         int diff = row - col;
-        if(rowsExist[row] || colsExist[col] || sumExist[sum] || diffExist[diff+n-1]) {
+        if(colsExist[col] || sumExist[sum] || diffExist[diff+n-1]) {
             return false;
         }
         return true;
@@ -84,7 +79,6 @@ public class NQueens {
     public void putQueen(char[][] chessSet, int row, int col) {
         int sum = row + col;
         int diff = row - col;
-        rowsExist[row] = true;
         colsExist[col] = true;
         sumExist[sum] = true;
         diffExist[diff+n-1] = true;
@@ -94,7 +88,6 @@ public class NQueens {
     public void removeQueen(char[][] chessSet, int row, int col) {
         int sum = row + col;
         int diff = row - col;
-        rowsExist[row] = false;
         colsExist[col] = false;
         sumExist[sum] = false;
         diffExist[diff+n-1] = false;
@@ -102,33 +95,24 @@ public class NQueens {
     }
 
     
-    ///Consider the chess set as n*n small cells from 0 to n*n-1
-    public void trackBack(char[][] chessSet, int m) {
-        if(m == n*n) {
+    public void trackBack(char[][] chessSet, int row) {
+        if(row == n) {
             List<String> lrow = new ArrayList<String>();
             for(int i = 0; i < n; i++) {
                 String str = new String(chessSet[i]);
-                if(str.indexOf('Q') >= 0) {
-                    lrow.add(str);
-                }
+                lrow.add(str);
             }
-            if(lrow.size() == n) {
-                lret.add(lrow);
-                count++;
-                return;
-            } else {
-                return;
-            }
+            lret.add(lrow);
+            count++;
+            return;
         }
 
-        int row = m / n;
-        int col = m % n;
-        if(isValid(row, col)) {
+        for(int col = 0; col < n; col++) {
+            if(!isValid(row, col)) continue;
             putQueen(chessSet, row, col);
-            trackBack(chessSet, m+1);
+            trackBack(chessSet, row+1); //go to next row
             removeQueen(chessSet, row, col);
         }
-        trackBack(chessSet, m+1);
     }
 
     public int totalNQueens(int n) {
@@ -137,7 +121,7 @@ public class NQueens {
     }
 
     public static void main(String[] argv) {
-        int m = 4;
+        int m = 5;
         NQueens nq = new NQueens();
         List<List<String>> ans = nq.solveNQueens(m);
         System.out.println(ans.toString());
