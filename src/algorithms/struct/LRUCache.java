@@ -1,4 +1,4 @@
-package algorithms.list;
+package algorithms.struct;
 
 import java.util.LinkedHashMap;
 
