@@ -69,6 +69,24 @@ public class SortList {
         return tmp.next;
     }
 
+    public ListNode sortList(ListNode head) {
+        if(head == null || head.next == null) return head;
+        //Split a LinkNode into two LinkNodes
+        ListNode cur=head, node1 = head, node2 = head;
+        while(node2 != null && node2.next != null) {
+            cur = node1;
+            node1 = node1.next;
+            node2 = node2.next.next;
+        }
+        node2 = cur.next;
+        cur.next = null;
+        node1 = head;
+        node1 = sortList(node1);
+        node2 = sortList(node2);
+        
+        return mergeTwoSortedLists(node1, node2);
+    }
+
     /***
      * Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
 
@@ -99,23 +117,5 @@ public class SortList {
             lptr.next = lr;
         }
         return lret.next;
-    }
-
-    public ListNode sortList(ListNode head) {
-        if(head == null || head.next == null) return head;
-        //Split a LinkNode into two LinkNodes
-        ListNode cur=head, node1 = head, node2 = head;
-        while(node2 != null && node2.next != null) {
-            cur = node1;
-            node1 = node1.next;
-            node2 = node2.next.next;
-        }
-        node2 = cur.next;
-        cur.next = null;
-        node1 = head;
-        node1 = sortList(node1);
-        node2 = sortList(node2);
-        
-        return mergeTwoSortedLists(node1, node2);
     }
 }
