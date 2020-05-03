@@ -29,14 +29,14 @@ public class Codec {
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         if(root == null) return "null";
-        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
         StringBuilder sb = new StringBuilder();
         TreeNode node = root;
-        stack.add(node);
-        while(!stack.isEmpty()) {
-            int count = stack.size();
+        queue.offer(node);
+        while(!queue.isEmpty()) {
+            int count = queue.size();
             for(int i = 0; i < count; i++) {
-                node = stack.poll();
+                node = queue.poll();
                 if(node != null) {
                     if(node == root) {
                         sb.append(node.val);
@@ -44,8 +44,8 @@ public class Codec {
                         sb.append(',');
                         sb.append(node.val);
                     }
-                    stack.add(node.left);
-                    stack.add(node.right);
+                    queue.offer(node.left);
+                    queue.offer(node.right);
                 } else {
                     sb.append(",null");
                 }
@@ -53,9 +53,12 @@ public class Codec {
         }
         
         String ans = sb.toString();
+        /***
+         * This can not be executed to save running time
         while(ans.endsWith(",null")) {
             ans = ans.substring(0, ans.length()-5);
         }
+        */
         
         return ans;
     }
@@ -72,16 +75,16 @@ public class Codec {
             return null;
         }
         TreeNode root = new TreeNode(val), node = root;
-        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
-        stack.offer(node);
-        for(int i = 1; i < nodes.length;i++) {
-            node = stack.poll();
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(node);
+        for(int i = 1; i < nodes.length; i++) {
+            node = queue.poll();
             strNode = nodes[i];
             if(!"null".equals(strNode)) {
                 try {
                     val = Integer.parseInt(strNode);
                     node.left = new TreeNode(val);
-                    stack.offer(node.left);
+                    queue.offer(node.left);
                 } catch(NumberFormatException e) {
                     
                 }
@@ -93,13 +96,13 @@ public class Codec {
                     try {
                         val = Integer.parseInt(strNode);
                         node.right = new TreeNode(val);
-                        stack.offer(node.right);
+                        queue.offer(node.right);
                     } catch(NumberFormatException e) {
                         
                     }
                 }
             }
-            if(stack.isEmpty()) break;
+            if(queue.isEmpty()) break;
         }
 
         return root;
