@@ -1,4 +1,4 @@
-package algorithms.struct;
+package algorithnms.trie;
 
 public class TrieNode {
 

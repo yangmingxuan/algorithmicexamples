@@ -1,4 +1,4 @@
-package algorithms.struct;
+package algorithnms.trie;
 
 /***
  * Implement a trie with insert, search, and startsWith methods.
