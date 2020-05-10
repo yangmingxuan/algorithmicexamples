@@ -1,4 +1,4 @@
-package algorithnms.trie;
+package algorithms.trie;
 
 public class TrieNode {
 
