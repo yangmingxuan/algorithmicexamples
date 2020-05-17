@@ -20,9 +20,46 @@ import java.util.Arrays;
  */
 public class KthLargestElementinanArray {
 
-    public int findKthLargest(int[] nums, int k) {
+    public int findKthLargest2(int[] nums, int k) {
         Arrays.sort(nums);
         return nums[nums.length - k];
     }
 
+    public int findKthLargest(int[] nums, int k) {
+        return quickSortK(nums, 0, nums.length-1, k); //the Kth is nums[k-1]
+    }
+
+    public int quickSortK(int[] nums, int start, int end, int k) {
+        if(start >= end) return nums[k-1];
+        int basic = nums[(start+end)/2], i = start, j = end;
+        while(i <= j) {
+            while(i <= j && nums[i] > basic) {
+                //if left is bigger than basic, do not need swap
+                i++;
+            }
+            while(i <= j && nums[j] < basic) {
+                //if right is less than basic, do not need swap
+                j--;
+            }
+            if(i <= j) {
+                //swap, so that left bigger than basic, and right less than basic
+                int tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = tmp;
+                i++;
+                j--;
+            }
+        }
+        
+        if(k-1 <= j) {
+            //it means that the kth largest element is in the left
+            return quickSortK(nums, start, j, k);
+        }
+        if(k-1 >= i) {
+            //it means that the kth largest element is in the right
+            return quickSortK(nums, i, end, k);
+        }
+        
+        return nums[k-1];
+    }
 }

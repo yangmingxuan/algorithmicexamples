@@ -8,6 +8,8 @@ public class TrieNode {
     private final int R = 26;
 
     private boolean isEnd;
+    
+    private String word;
 
     public TrieNode() {
         links = new TrieNode[R];
@@ -28,5 +30,10 @@ public class TrieNode {
     public boolean isEnd() {
         return isEnd;
     }
-
+    public void setWord(String word) {
+        this.word = word;
+    }
+    public String getWord() {
+        return word;
+    }
 }
