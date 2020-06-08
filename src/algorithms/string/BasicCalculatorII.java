@@ -76,11 +76,6 @@ public class BasicCalculatorII {
     public int comparePrevious(char oper1, char oper2) {
         switch(oper1) {
         case '+':
-            if(oper2 == '*' || oper2 == '/') {
-                return -1;
-            } else {
-                return 0;
-            }
         case '-':
             if(oper2 == '*' || oper2 == '/') {
                 return -1;
@@ -88,11 +83,6 @@ public class BasicCalculatorII {
                 return 0;
             }
         case '*':
-            if(oper2 == '*' || oper2 == '/') {
-                return 0;
-            } else {
-                return 1;
-            }
         case '/':
             if(oper2 == '*' || oper2 == '/') {
                 return 0;
