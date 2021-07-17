@@ -66,11 +66,11 @@ public class DecodeWaysII {
         for(int i = 2; i < dp.length; i++) {
             if (s.charAt(i-1) == '*') {
                 long res = 9 * dp[i-1] % M;
-                if (i > 0 && s.charAt(i - 2) == '1') {
+                if (s.charAt(i - 2) == '1') {
                     res = (res + 9 * dp[i-2]) % M;
-                } else if (i > 0 && s.charAt(i - 2) == '2') {
+                } else if (s.charAt(i - 2) == '2') {
                     res = (res + 6 * dp[i-2]) % M;
-                } else if (i > 0 && s.charAt(i - 2) == '*') {
+                } else if (s.charAt(i - 2) == '*') {
                     res = (res + 15 * dp[i-2]) % M;
                 }
                 dp[i] = res;
