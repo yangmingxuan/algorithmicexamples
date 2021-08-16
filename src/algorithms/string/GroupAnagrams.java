@@ -30,10 +30,6 @@ import java.util.Set;
  */
 public class GroupAnagrams {
 
-    public GroupAnagrams() {
-        // TODO Auto-generated constructor stub
-    }
-
     public List<List<String>> groupAnagrams(String[] strs) {
         List<List<String>> lret = new ArrayList<List<String>>();
         Map<String, Integer> existAnagram = new HashMap<String, Integer>();
@@ -85,7 +81,40 @@ public class GroupAnagrams {
         }
         return lret;
     }
-    
+
+    /***
+     * use hash
+     * @param strs
+     * @return
+     */
+    public List<List<String>> groupAnagrams3(String[] strs) {
+        List<List<String>> lret = new ArrayList<List<String>>();
+        HashMap<Integer, Integer> existAnagram = new HashMap<Integer, Integer>();
+        int index = 0;
+        for(String str: strs) {
+            int hash = getHash(str);
+            if(existAnagram.containsKey(hash)) {
+                lret.get(existAnagram.get(hash)).add(str);
+            } else {
+                List<String> ltmp = new ArrayList<String>();
+                ltmp.add(str);
+                lret.add(ltmp);
+                existAnagram.put(hash, index);
+                index++;
+            }
+        }
+        return lret;
+    }
+
+    private int getHash(String s) {
+        int hash = 0;
+        for(char ch : s.toCharArray()) {
+            int id = ch - 'a' + 1;
+            hash += (id * (17+id) * (23+id) * (29+id) * (41+id));
+        }
+        return hash;
+    }
+ 
     public static void main(String[] atgv) {
         String[] strs = {"eat","tea","tan","ate","nat","bat"};
         GroupAnagrams gag = new GroupAnagrams();
