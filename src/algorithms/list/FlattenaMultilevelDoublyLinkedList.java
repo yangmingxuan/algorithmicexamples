@@ -1,5 +1,7 @@
 package algorithms.list;
 
+import java.util.Stack;
+
 /***
  * You are given a doubly linked list which in addition to the next and previous pointers, it could have a child pointer, which may or may not point to a separate doubly linked list. These child lists may have one or more children of their own, and so on, to produce a multilevel data structure, as shown in the example below.
 
@@ -89,5 +91,28 @@ public class FlattenaMultilevelDoublyLinkedList {
         //put the child to null
         cur.child = null;
         return FlattenNode(childnode, tempNxt);
+    }
+
+    public NodeWithChild flatten2(NodeWithChild head) {
+        if(head == null) return null;
+        NodeWithChild zerohead = new NodeWithChild(0,null,null,null);
+        Stack<NodeWithChild> stack = new Stack<NodeWithChild>();
+        NodeWithChild pre = zerohead;
+        stack.add(head);
+        while(!stack.isEmpty()) {
+            NodeWithChild node = stack.pop();
+            pre.next = node;
+            node.prev = pre;
+            pre = node;
+            if(node.next != null) {
+                stack.add(node.next);
+            }
+            if(node.child != null) {
+                stack.add(node.child);
+                node.child = null;
+            }
+        }
+        zerohead.next.prev = null;
+        return zerohead.next;
     }
 }

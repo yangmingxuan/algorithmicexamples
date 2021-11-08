@@ -121,7 +121,8 @@ public class LongestDuplicateSubstring {
      */
     public String longestDupSubstring(String S) {
         if(S == null || S.length() == 0) return S;
-        modulus = (long)Math.pow(2, 32); //Integer.Max + 1
+        //modulus = (long)Math.pow(2, 32); //Integer.Max + 1
+        modulus = 100000000007L;
         maxLen = 0;
         ans = "";
         int[] nums = new int[S.length()];
