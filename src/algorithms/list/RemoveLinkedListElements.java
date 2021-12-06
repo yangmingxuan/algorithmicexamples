@@ -13,6 +13,16 @@ package algorithms.list;
 public class RemoveLinkedListElements {
 
     public ListNode removeElements(ListNode head, int val) {
+        if(head == null) return null;
+        ListNode next = removeElements(head.next, val);
+        if(head.val == val) {
+            return next;
+        }
+        head.next = next;
+        return head;
+    }
+
+    public ListNode removeElements2(ListNode head, int val) {
         ListNode firstNode = new ListNode(0);
         firstNode.next = head;
         ListNode pre = firstNode, cur = head;
