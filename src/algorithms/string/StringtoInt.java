@@ -35,15 +35,11 @@ import java.io.InputStreamReader;
     Input: "-91283472332"
     Output: -2147483648
     Explanation: The number "-91283472332" is out of the range of a 32-bit signed integer.
-                 Thefore INT_MIN (−231) is returned.
+                 Thefore INT_MIN (−2^31) is returned.
  * @author miche
  *
  */
 public class StringtoInt {
-
-    public StringtoInt() {
-        // TODO Auto-generated constructor stub
-    }
 
     /***
      * Runtime: 1 ms, faster than 100.00% of Java online submissions for String to Integer (atoi).
@@ -76,7 +72,7 @@ public class StringtoInt {
                 if((ret == Integer.MAX_VALUE / 10) && c > '7' && !isminus) {
                     return Integer.MAX_VALUE;
                 }
-                if((ret == Integer.MAX_VALUE / 10) && c > '8' && isminus) {
+                if((ret == Integer.MAX_VALUE / 10) && c > '7' && isminus) {
                     return Integer.MIN_VALUE;
                 }
                 ret = ret * 10 + (c - '0');
