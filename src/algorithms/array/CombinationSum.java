@@ -99,6 +99,7 @@ public class CombinationSum {
         List<List<Integer>> lret = new ArrayList<List<Integer>>();
         List<Integer> lslt = new ArrayList<Integer>();
         Arrays.sort(candidates);
+        /*
         for(int index = 0; index < candidates.length; index++) {
             if(index > 0 && candidates[index-1] == candidates[index]) {
                 continue;
@@ -107,6 +108,8 @@ public class CombinationSum {
             recursiveCount2(lret, candidates, target-candidates[index], index, lslt);
             lslt.remove(lslt.size()-1);
         }
+        */
+        recursiveCount2(lret, candidates, target, 0, lslt);
         return lret;
     }
 
@@ -118,12 +121,12 @@ public class CombinationSum {
             return;
         }
   
-        for(int i = index+1; i < candidates.length; i++) {
-            if(i > index+1 && candidates[i-1] == candidates[i]) {
+        for(int i = index; i < candidates.length; i++) {
+            if(i > index && candidates[i-1] == candidates[i]) {
                 continue;
             }
             lslt.add(candidates[i]);
-            recursiveCount2(lret, candidates, target-candidates[i], i, lslt);
+            recursiveCount2(lret, candidates, target-candidates[i], i+1, lslt);
             lslt.remove(lslt.size()-1);
         }
     }

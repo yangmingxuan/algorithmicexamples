@@ -53,4 +53,34 @@ public class ShortestUnsortedContinuousSubarray {
         
         return right > left ? right-left+1 : 0;
     }
+
+    public int findUnsortedSubarray3(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        while(left < nums.length-1 && nums[left] <= nums[left+1]) {
+            left++;
+        }
+        if(left == nums.length-1) return 0;
+        
+        while(right > 0 && nums[right] >= nums[right-1]) {
+            right--;
+        }
+        
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        
+        for(int i = left; i <= right; i++) {
+            min = Math.min(min, nums[i]);
+            max = Math.max(max, nums[i]);
+        }
+        
+        int tmp = 0;
+        while(tmp < left && nums[tmp] <= min) tmp++;  //find the min to left
+        left = tmp;
+        
+        tmp = nums.length-1;
+        while(tmp > right && nums[tmp] >= max) tmp--; //find the max to right
+        right = tmp;
+        
+        
+        return right-left+1;
+    }
 }
