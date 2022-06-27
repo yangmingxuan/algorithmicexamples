@@ -36,8 +36,8 @@ public class BinaryTreeCameras {
     int ans = 0;
     public int minCameraCover(TreeNode root) {
         HashSet<TreeNode> canMonitor = new HashSet<TreeNode>();
-        canMonitor.add(null); //include all node's null children (such as leaf node or one child node is null) 
-        dfs(root, null, canMonitor);
+        //if use dfs2 mothod canMonitor.add(null); //include all node's null children (such as leaf node or one child node is null) 
+        dfs2(root, null, canMonitor);
         return ans;
     }
 
@@ -53,6 +53,22 @@ public class BinaryTreeCameras {
             canMonitor.add(node);
             canMonitor.add(node.left);
             canMonitor.add(node.right);
+        }
+    }
+
+    public void dfs2(TreeNode node, TreeNode parent, HashSet<TreeNode> canMonitor) {
+        if(node == null) return;
+        dfs(node.left, node, canMonitor);
+        dfs(node.right, node, canMonitor);
+        if(canMonitor.contains(parent) || canMonitor.contains(node) || canMonitor.contains(node.left) || canMonitor.contains(node.right)) {
+            //if parent or node or children had been placed camera, it means this node can be monitored
+            return;
+        }
+        ans++;
+        if(parent != null) {
+            canMonitor.add(parent);
+        } else {
+            canMonitor.add(node);
         }
     }
 }
