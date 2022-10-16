@@ -49,7 +49,8 @@ public class MatchstickstoSquare {
         Arrays.sort(typeNums, (a,b)->b-a);
         
         //if(typeNums[0] > sideLength) return false;
-        return dfs2(sideLength, 0);
+        boolean[] visited = new boolean[nums.length];
+        return dfs2(visited, sideLength, 0);
         //return dfs(0);
     }
 
@@ -74,20 +75,21 @@ public class MatchstickstoSquare {
         return false;
     }
 
-    public boolean dfs2(int remain, int count) {
-        if(count == 4) return true;
+    public boolean dfs2(boolean[] visited, int remain, int sideidx) {
+        if(sideidx == 4) return true;
         
         for(int i = 0; i < typeNums.length; i++) {
-            if(typeNums[i] == -1) continue; //used
+            if(visited[i]) continue; //used
             if(typeNums[i] > remain) return false; //cannot used to be linked to a stick
             int tmp = typeNums[i];
-            typeNums[i] = -1;
+            visited[i] = true;
             
             //if remain-tmp == 0, construct the next side
-            boolean ans = dfs2(remain-tmp==0 ? sideLength : remain-tmp, remain-tmp==0 ? count+1 : count);
+            boolean ans = dfs2(visited, remain-tmp==0 ? sideLength : remain-tmp, remain-tmp==0 ? sideidx+1 : sideidx);
             
-            typeNums[i] = tmp; //reset
+            visited[i] = false; //reset
             if(ans) return true;
+            while (i+1 < typeNums.length && typeNums[i+1] == typeNums[i]) i++;
         }
         
         return false;
